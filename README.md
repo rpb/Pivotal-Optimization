@@ -33,7 +33,9 @@ docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
 ** Quick-Start and Build instructions assume that you have docker installed and running**
 
 1. Start Docker-Machine
+```bash
     eval "$(docker-machine env default)"
+```
 2. Pull Images
 ```bash
     docker pull rpbennett/gpdb
