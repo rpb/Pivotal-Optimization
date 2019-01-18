@@ -29,8 +29,7 @@ docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
   * Python packages required for Jupyter Notebook: psycopg2, pandas, seaborn, textwrap, ipywidgets, IPython
 
 
-### Quick-Start
-#### Use images from dockerhub
+### Quick-Start: Use images from dockerhub
 1. Start Docker-Machine
     eval "$(docker-machine env default)"
 2. Pull Images
@@ -40,24 +39,26 @@ docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
 3. Run Containers
    * Run each container in a separate terminal
    * The Jupyter container must be run from the docker-jupyter directory
-   ```bash
+```bash
 
-	# create network for inter container communication
-	docker network create -d bridge contbridge
+   # create network for inter container communication
+   docker network create -d bridge contbridge
 
-	# run gpdb image terminal
-	docker run -it --rm --network=contbridge -p 5432:5432 --name=gpdb rpbennett/gpdb
+   # run gpdb image terminal
+   docker run -it --rm --network=contbridge -p 5432:5432 --name=gpdb rpbennett/gpdb
 	
-	# build spark container terminal
-	docker run -it --rm --network=contbridge -p 4040:4040 -p 8080:8080 -p 8081:8081 -h spark --name=spark p7hb/docker-spark
-	# from within container
-	start-master.sh && start-slave.sh spark://spark:7077
+   # build spark container terminal
+   docker run -it --rm --network=contbridge -p 4040:4040 -p 8080:8080 -p 8081:8081 -h spark --name=spark p7hb/docker-spark
+   # from within container
+   start-master.sh && start-slave.sh spark://spark:7077
 
-	# run jupyter-notebook container ternminal (from docker-jupyter directory)
-	cd docker-jupyter
-	docker run -it --rm --network=contbridge -p 8888:8888 --name=jupyter --mount type=bind,source=$(pwd)/notebooks,destination=/jupyter/notebooks rpbennett/jupyter
+   # run jupyter-notebook container ternminal (from docker-jupyter directory)
+   cd docker-jupyter
+   docker run -it --rm --network=contbridge -p 8888:8888 --name=jupyter --mount type=bind,source=$(pwd)/notebooks,destination=/jupyter/notebooks rpbennett/jupyter
 ```
+
 4. Docker IP
+
 ```bash
 # Grab IP of 'default' image
 docker-machine ip default
