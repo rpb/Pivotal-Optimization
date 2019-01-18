@@ -30,12 +30,16 @@ docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
 
 
 ### Quick-Start: Use images from dockerhub
+** Quick-Start and Build instructions assume that you have docker installed and running**
+
 1. Start Docker-Machine
     eval "$(docker-machine env default)"
 2. Pull Images
+```bash
     docker pull rpbennett/gpdb
     docker pull rpbennett/jupyter
     docker pull rpbennett/juliaopt
+```
 3. Run Containers
    * Run each container in a separate terminal
    * The Jupyter container must be run from the docker-jupyter directory
@@ -72,9 +76,7 @@ docker-machine ip default
 * Spark WebUI console: http://< IP ADDRESS >:4040/
 
 
-#### Build Docker Images
-
-**Instructions assume that you have docker installed and running**
+### Build Docker Images
 
 1. Download the following files to "docker-gpdb/pivotal" directory from https://network.pivotal.io/products/pivotal-gpdb
   * Greenplum Database 5.3.0 Binary Installer for RHEL 6 (greenplum-db-5.3.0-rhel6-x86_64.zip)
