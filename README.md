@@ -39,7 +39,7 @@
 # Grab IP of 'default' image
 docker-machine ip default
 # 192.168.99.100
-
+```
 
 ### Build Docker Images
 
