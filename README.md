@@ -4,29 +4,11 @@
 
 ## Jupyter
 
+
 ## Julia
 
+
 **January, 2019**
-
-Much of this is based on the work of Jarrod Vawdrey (jvawdrey@pivotal.io)
-#### Initial items to cover
-
-* Jupyter Notebook and connecting to GPDB
-* Apache MADlib
-* PL/Python
-* GPDB-Spark Connector
-* Julia
-* JuliaOpt/JuMP
-
-
-#### Modeling Workflow Example
-
-docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
-
-1) Docker image: See instructions below
-2) Greenplum cluster: To run notebook against Greenplum cluster   
-  * Greenplum Environment: GPDB 5.3, MADlib 1.13, Greenplum Python Data Science Package
-  * Python packages required for Jupyter Notebook: psycopg2, pandas, seaborn, textwrap, ipywidgets, IPython
 
 
 ### Quick-Start: Use images from dockerhub
@@ -38,29 +20,17 @@ docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
 ```
 2. Pull Images
 ```bash
-    docker pull rpbennett/gpdb
-    docker pull rpbennett/jupyter
     docker pull rpbennett/juliaopt
 ```
 3. Run Containers
-   * Run each container in a separate terminal
-   * The Jupyter container must be run from the docker-jupyter directory
 ```bash
 
    # create network for inter container communication
    docker network create -d bridge contbridge
 
-   # run gpdb image terminal
-   docker run -it --rm --network=contbridge -p 5432:5432 --name=gpdb rpbennett/gpdb
-	
-   # build spark container terminal
-   docker run -it --rm --network=contbridge -p 4040:4040 -p 8080:8080 -p 8081:8081 -h spark --name=spark p7hb/docker-spark
-   # from within container
-   start-master.sh && start-slave.sh spark://spark:7077
+   # run julia image terminal
+   docker run -it --rm --network=contbridge -p 8999:8999 --name=juliaopt rpbennett/juliaopt
 
-   # run jupyter-notebook container ternminal (from docker-jupyter directory)
-   cd docker-jupyter
-   docker run -it --rm --network=contbridge -p 8888:8888 --name=jupyter --mount type=bind,source=$(pwd)/notebooks,destination=/jupyter/notebooks rpbennett/jupyter
 ```
 
 4. Docker IP
@@ -70,75 +40,8 @@ docker-jupyter/notebooks/Modeling Workflow Example - Greenplum Database.ipynb
 docker-machine ip default
 # 192.168.99.100
 
-```
-
-* Jupyter Notebook: http://< IP ADDRESS >:8888/
-* Spark Master WebUI console: http://< IP ADDRESS >:8080/
-* Spark Worker WebUI console: http://< IP ADDRESS >:8081/
-* Spark WebUI console: http://< IP ADDRESS >:4040/
-
 
 ### Build Docker Images
-
-1. Download the following files to "docker-gpdb/pivotal" directory from https://network.pivotal.io/products/pivotal-gpdb
-  * Greenplum Database 5.3.0 Binary Installer for RHEL 6 (greenplum-db-5.3.0-rhel6-x86_64.zip)
-  * MADlib 1.13 for RHEL 6 (madlib-1.13-gp5-rhel6-x86_64.tar.gz)
-  * Python Data Science Package for RHEL 6 (DataSciencePython-1.1.1-gp5-rhel6-x86_64.gppkg)
-
-2. Download the following files to "docker-jupyter/pivotal" directory from https://network.pivotal.io/products/pivotal-gpdb
-  * Greenplum-Spark Connector 1.1.0 (greenplum-spark_2.11-1.1.0.jar)
-
-3. Build containers
-```bash
-# Grab IP address of docker container
-# I am using docker / virtualbox setup where command is
-eval "$(docker-machine env default)"
-
-# build gpdb container
-cd docker-gpdb
-docker build -t rpbennett/gpdb .
-cd ..
-
-# build jupyter container
-cd docker-jupyter
-docker build -t rpbennett/jupyter .
-cd ..
-
-```
-
-4. Run containers
-```bash
-
-# create network for inter container communication
-docker network create -d bridge contbridge
-
-# run gpdb image
-docker run -it --rm --network=contbridge -p 5432:5432 --name=gpdb rpbennett/gpdb
-
-# build spark container
-docker run -it --rm --network=contbridge -p 4040:4040 -p 8080:8080 -p 8081:8081 -h spark --name=spark p7hb/docker-spark
-# from within container
-start-master.sh && start-slave.sh spark://spark:7077
-
-# run jupyter-notebook container (from docker-jupyter directory)
-cd docker-jupyter
-docker run -it --rm --network=contbridge -p 8888:8888 --name=jupyter --mount type=bind,source=$(pwd)/notebooks,destination=/jupyter/notebooks rpbennett/jupyter
-
-```
-
-5. Docker IP
-```bash
-# Grab IP of 'default' image
-docker-machine ip default
-# 192.168.99.100
-
-```
-
-* Jupyter Notebook: http://< IP ADDRESS >:8888/
-* Spark Master WebUI console: http://< IP ADDRESS >:8080/
-* Spark Worker WebUI console: http://< IP ADDRESS >:8081/
-* Spark WebUI console: http://< IP ADDRESS >:4040/
-
 
 ### Issues
 
