@@ -1,15 +1,10 @@
 # Pivotal-Optimization
-
-## GPBD
-
-## Jupyter
-
-
-## Julia
+This is the beginnings of an optimization demo using Greenplum Database and Julia
 
 
 **January, 2019**
-
+## Julia
+Cloned base julia docker and installed JuMP & required packages
 
 ### Quick-Start: Use images from dockerhub
 ** Quick-Start and Build instructions assume that you have docker installed and running**
